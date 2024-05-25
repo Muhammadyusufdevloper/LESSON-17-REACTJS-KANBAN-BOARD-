@@ -42,14 +42,25 @@ const KanbanBoard = () => {
   let memoFilterByStatus = useCallback((status) => {
     return filterByStatus(status)
   })
-  statusItem.forEach((element) => {
-    let status = element.status.toLowerCase().trim()
-    if (status.includes(element.status)) {
-      console.log();
-    }
-  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const trimmedStatusTitle = statusTitle.trim();
+    
+    let duplicate = false;
+    statusItem.forEach(item => {
+      if (item.status.toLowerCase() === trimmedStatusTitle.toLowerCase()) {
+        duplicate = true;
+      }
+    });
+    if (duplicate) {
+      alert('Iltimos boshqa nom kiriting');
+      return;
+    }
+
+
+
     let id = new Date();
     let statusData = {
       id: id.getTime(),
