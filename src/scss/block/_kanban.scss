@@ -1,0 +1,201 @@
+.kanban {
+  margin-top: 40px;
+  margin-bottom: 90px;
+  &__title {
+    margin-bottom: 30px;
+  }
+  &__btn {
+    padding: 10px 24px;
+    background: dodgerblue;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+  }
+  &__form {
+    margin-top: 30px;
+    // max-height: 0;
+    overflow: hidden;
+    transition: 0.3s;
+    visibility: hidden;
+    opacity: 0;
+    user-select: none;
+  }
+  &__scrol-wrapper {
+    padding-bottom: 20px;
+    overflow-x: scroll;
+  }
+  &__wrapper {
+    margin-top: 30px;
+    display: flex;
+    align-items: flex-start;
+    grid-gap: 12px;
+    align-items: flex-start;
+  }
+  &__block {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    max-height: 600px;
+    overflow: auto;
+  }
+
+  &__box {
+    min-height: 300px;
+    min-width: 25%;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+    background: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+
+    &:nth-child(1) {
+      border-left: 4px solid #5559d6;
+      .kanban__heading {
+        background: #5559d6;
+      }
+    }
+    &:nth-child(2) {
+      border-left: 4px solid #f1ae53;
+      .kanban__heading {
+        background: #f1ae53;
+      }
+    }
+    &:nth-child(3) {
+      border-left: 4px solid #d04f61;
+      .kanban__heading {
+        background: #d04f61;
+      }
+    }
+    &:nth-child(4) {
+      border-left: 4px solid #5dc47d;
+      .kanban__heading {
+        background: #5dc47d;
+      }
+    }
+  }
+  &__block__buttons-part {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    margin: 30px 0 10px;
+    button {
+      padding: 5px 30px;
+      font-weight: 500;
+      border-radius: 4px;
+      &:nth-child(1) {
+        background-color: rgba(0, 255, 115, 0.649);
+        border: 1px solid rgba(0, 255, 115, 0.668);
+        color: #000000be;
+      }
+      &:nth-child(2) {
+        background-color: rgba(255, 0, 0, 0.85);
+        border: 1px solid rgba(255, 0, 0, 0.698);
+        color: rgba(255, 255, 255, 0.829);
+      }
+    }
+  }
+  &__heading {
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+  }
+
+  &__item {
+    min-height: 100px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 5px #0001;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    &__top-boxes {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;
+      button {
+        background-color: rgb(255, 187, 0);
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    select {
+      padding: 3px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      outline: none;
+    }
+  }
+  &__commit {
+    font-size: 14px;
+    color: #999;
+    flex: 1;
+  }
+  &__status {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    span {
+      font-size: 12px;
+      color: #999;
+    }
+  }
+  &__add_btn {
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    background: transparent;
+  }
+  &__block {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    max-height: 600px;
+    overflow: auto;
+    &__icon {
+      font-size: 60px;
+      display: block;
+      width: 100%;
+      margin: auto 0;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .kanban {
+    &__scrol-wrapper {
+      &::-webkit-scrollbar {
+        height: 6px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #ddd;
+        border-radius: 8px;
+      }
+    }
+    &__block {
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #ddd;
+        border-radius: 8px;
+      }
+    }
+  }
+}
