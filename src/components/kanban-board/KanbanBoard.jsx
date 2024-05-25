@@ -46,11 +46,11 @@ const KanbanBoard = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const trimmedStatusTitle = statusTitle.trim();
-    
+    const trimmedTitle = statusTitle.trim();
+
     let duplicate = false;
     statusItem.forEach(item => {
-      if (item.status.toLowerCase() === trimmedStatusTitle.toLowerCase()) {
+      if (item.status.toLowerCase() === trimmedTitle.toLowerCase()) {
         duplicate = true;
       }
     });
@@ -58,8 +58,6 @@ const KanbanBoard = () => {
       alert('Iltimos boshqa nom kiriting');
       return;
     }
-
-
 
     let id = new Date();
     let statusData = {
@@ -89,14 +87,17 @@ const KanbanBoard = () => {
     title.current.value = ""
     desc.current.value = ""
   }
-
+  const handelAdd = () => {
+    if (statusItem.length === 4) return alert("Iltimos premiyumni sotib oling")
+    setBoxModal(true)
+  }
   return (
     <section>
       <div className="container">
         <div className="kanban">
           <h2 className="kanban__title">Kanban Board</h2>
           <div className="kanban__header">
-            <button className="kanban__btn" onClick={() => setBoxModal(true)}>Add</button>
+            <button className="kanban__btn" onClick={handelAdd}>Add</button>
           </div>
           {
             !statusItem.length ?
