@@ -1,45 +1,29 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { DATA } from "../../static/";
 import KanbanBoardBlock from "./KanbanBoardBloxk";
-import KanbonItem from "./KanbonItem";
 import KanbonItemModal from "../modal/KanbonItemModal";
-
-// let STATUS__ITEM = ["ready", "working", "stuck", "done", "lorem"]
-let STATUS__ID = new Date()
-let STATUS__ITEM = [
-  {
-    id: STATUS__ID.getTime()+1,
-    status: "ready"
-  },
-  {
-    id: STATUS__ID.getTime()+34,
-    status: "working"
-  },
-  {
-    id: STATUS__ID.getTime()+243333,
-    status: "stuck"
-  },
-  {
-    id: STATUS__ID.getTime()+131,
-    status: "done"
-  },
-  {
-    id: STATUS__ID.getTime()+231,
-    status: "lorem"
-  }
-]
+import KanbonItem from "./KanbonItem";
 
 const KanbanBoard = () => {
   const [data, setData] = useState(JSON.parse(localStorage.getItem("kanBoard")) || DATA)
   const [selectedStatus, setSelectedStatus] = useState(null)
   const [changeStatus, setChangeStatus] = useState(null)
+  const [boxModal, setBoxModal] = useState(false)
+  const [statusItem, setStatusItem] = useState(JSON.parse(localStorage.getItem("kanBoardStatus")) || []);
+  const [statusTitle, setStatusTitle] = useState("")
+
 
   const title = useRef(null)
   const desc = useRef(null)
-
   useEffect(() => {
     localStorage.setItem("kanBoard", JSON.stringify(data))
   }, [data])
+
+
+  useEffect(() => {
+    localStorage.setItem("kanBoardStatus", JSON.stringify(statusItem));
+  }, [statusItem]);
+
 
   useEffect(() => {
     if (changeStatus) {
@@ -51,15 +35,30 @@ const KanbanBoard = () => {
 
   const filterByStatus = (status) => {
     return data?.filter(el => el.status === status)?.map((el) => (
-      <KanbonItem setChangeStatus={setChangeStatus} data={data} setData={setData} key={el.id} STATUS__ITEM={STATUS__ITEM} el={el} />
+      <KanbonItem setChangeStatus={setChangeStatus} data={data} setData={setData} key={el.id} STATUS__ITEM={statusItem} el={el} />
     ))
   }
 
   let memoFilterByStatus = useCallback((status) => {
     return filterByStatus(status)
   })
-
-
+  statusItem.forEach((element) => {
+    let status = element.status.toLowerCase().trim()
+    if (status.includes(element.status)) {
+      console.log();
+    }
+  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let id = new Date();
+    let statusData = {
+      id: id.getTime(),
+      status: statusTitle
+    };
+    setStatusItem((prevStatus) => [...prevStatus, statusData]);
+    setStatusTitle("");
+    setBoxModal(false)
+  };
   const handleCreateItem = (e) => {
     e.preventDefault()
     let data = new Date()
@@ -84,11 +83,30 @@ const KanbanBoard = () => {
     <section>
       <div className="container">
         <div className="kanban">
-
           <h2 className="kanban__title">Kanban Board</h2>
           <div className="kanban__header">
-            <button className="kanban__btn">Add</button>
+            <button className="kanban__btn" onClick={() => setBoxModal(true)}>Add</button>
           </div>
+          {
+            !statusItem.length ?
+              <div className="kanban__headquarter-box">
+                <h1>Malumotni Kriting</h1>
+                <button className="kanban__btn" onClick={() => setBoxModal(true)}>Get start</button>
+              </div>
+              : <></>}
+
+          <div onClick={() => setBoxModal(false)} className={boxModal ? `kanban__modal__overle` : ""}></div>
+          {
+            boxModal ?
+              <div className="kanban__add-box__modal">
+                <button className={`kanban__modal__edit-close`} onClick={() => setBoxModal(false)}>X</button>
+                <form onSubmit={handleSubmit} className="kanban__add-box__form">
+                  <input required value={statusTitle} onChange={(e) => setStatusTitle(e.target.value)} type="text" placeholder="Title enter" />
+                  <button>Save</button>
+                </form>
+              </div>
+              : <></>
+          }
           <KanbonItemModal
             selectedStatus={selectedStatus}
             handleCreateItem={handleCreateItem}
@@ -100,7 +118,8 @@ const KanbanBoard = () => {
               <KanbanBoardBlock
                 setSelectedStatus={setSelectedStatus}
                 item={memoFilterByStatus}
-                status__item={STATUS__ITEM}
+                status__item={statusItem}
+                setStatusItem={setStatusItem}
               />
             </div>
           </div>

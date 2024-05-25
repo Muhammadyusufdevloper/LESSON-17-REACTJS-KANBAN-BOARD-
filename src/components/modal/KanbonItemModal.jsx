@@ -22,7 +22,6 @@ KanbonItemModal.propTypes = {
     handleCreateItem: PropTypes.func.isRequired,
     title: PropTypes.object.isRequired,
     desc: PropTypes.object.isRequired,
-    selectedStatus: PropTypes.bool.isRequired,
     setSelectedStatus: func.isRequired,
 };
 
